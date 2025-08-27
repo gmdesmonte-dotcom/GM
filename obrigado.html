@@ -6,20 +6,6 @@
 <title>Obrigado pelo Contato</title>
 <meta name="description" content="Obrigado pelo seu contato! Em breve retornaremos com mais informações.">
 
-<!-- Tag global do Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17480742566"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-17480742566');
-</script>
-
-<!-- Evento de conversão para a página Obrigado -->
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-17480742566/gyyvCLvCvoYbEKbtu49B'});
-</script>
-
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -85,31 +71,9 @@
   
   <div class="buttons">
     <a href="index.html" class="button">Voltar para a Página Inicial</a>
-    <a href="https://wa.me/553798416044" 
-       class="button whatsapp"
-       onclick="return gtag_report_conversion('https://wa.me/553798416044>
-       Falar no WhatsApp
-    </a>
+    <a href="https://wa.me/553798416044" class="button whatsapp" target="_blank">Falar no WhatsApp</a>
   </div>
 </div>
-
-<script>
-// Função de rastreamento para o botão do WhatsApp
-function gtag_report_conversion(url) {
-  var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
-  gtag('event', 'conversion', {
-      'send_to': 'AW-17480742566/gyyvCLvCvoYbEKbtu49B',
-      'value': 1.0,
-      'currency': 'BRL',
-      'event_callback': callback
-  });
-  return false;
-}
-</script>
 
 </body>
 </html>
