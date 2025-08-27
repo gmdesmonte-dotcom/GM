@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Frete</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f6fff6;padding:20px;}
+.container{max-width:600px;margin:0 auto;background:#fff;padding:20px;border-radius:12px;border:2px solid #3bb34b;position:relative;overflow:hidden;}
+h2{color:#3bb34b;text-align:center;margin-bottom:24px;}
+.form-row{margin-bottom:16px;}
+label{font-weight:600;margin-bottom:6px;display:block;}
+input, select{width:100%;padding:10px;border-radius:8px;border:1px solid #d9d9d9;}
+button{padding:12px;background:#3bb34b;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;transition:0.3s;}
+button:hover{background:#2a8a36;}
+#truckIcon{position:absolute;top:-30px;left:-80px;height:50px;z-index:10;transition:left 1s ease-in-out;}
+#loading{height:6px;background:#d9d9d9;border-radius:4px;overflow:hidden;margin-bottom:16px;display:none;}
+#loadingBar{height:6px;width:0%;background:#3bb34b;transition:width 1.2s;}
+#resultado, #pixCodeContainer{display:none;padding:16px;border-radius:12px;margin-top:12px;}
+#resultado{background:#eaf8ea;border:1px solid #3bb34b;white-space:pre-line;}
+#pixCodeContainer{background:#fff;border:1px solid #3bb34b;text-align:center;}
+#pixCodeContainer button{margin-top:8px;padding:10px 16px;}
+#copyMsg{display:none;color:green;margin-top:6px;}
+a{color:#3bb34b; text-decoration:none;}
+a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Calculadora de Frete</h2>
+
+<img id="truckIcon" src="truck.png" alt="Caminhão">
+
+<div class="form-row">
+<label>CEP de Origem</label>
+<input type="text" id="cepOrigem" value="35501172" disabled>
+<small>Rua Duarte, 177 - Planalto, Divinópolis - MG</small>
+</div>
+
+<div class="form-row">
+<label>CEP de Destino</label>
+<input type="text" id="cepDestino" placeholder="Digite o CEP">
+</div>
+
+<div class="form-row">
+<label>Numero da Residencia</label>
+<input type="number" id="peso" placeholder="Ex: 10" min="0">
+</div>
+
+<div class="form-row">
+<label>Tipo de Frete</label>
+<select id="tipoFrete">
+<option value="normal">Normal</option>
+<option value="expresso">Expresso</option>
+</select>
+</div>
+
+<div class="form-row">
+<button id="btnCalcular">💰 Calcular Frete</button>
+</div>
+
+<div id="loading"><div id="loadingBar"></div></div>
+<div id="resultado"></div>
+
+<div id="pixCodeContainer">
+<p>Clique para copiar o PIX:</p>
+<strong id="pixCode"></strong>
+<button onclick="copiarPIX()">Copiar PIX</button>
+<span id="copyMsg">PIX copiado!</span>
+</div>
+</div>
+
+<script>
+const chavePIX="e26cf2af-83a0-4807-aa00-ab88dd84850d";
+let pixPayload="";
+const cepLoja="35501172";
+const cidadeLoja="Divinópolis";
+const estadoLoja="MG";
+
+function copiarPIX(){
+  pixPayload=chavePIX;
+  navigator.clipboard.writeText(pixPayload).then(()=>{
+    document.getElementById('copyMsg').style.display="inline";
+  }).catch(()=>alert("Erro ao copiar o PIX."));
+}
+
+async function buscarEndereco(cep){
+  try{
+    const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data=await resp.json();
+    if(data.erro) return null;
+    return data;
+  }catch{return null;}
+}
+
+function animarCaminhao(){
+  const truck=document.getElementById('truckIcon');
+  truck.style.transition='none';
+  truck.style.left='-80px';
+  truck.offsetHeight;
+  truck.style.transition='left 1.2s ease-in-out';
+  truck.style.left='calc(100% + 50px)';
+  truck.addEventListener('transitionend', function voltar(){
+    truck.style.transition='left 0.8s ease-in-out';
+    truck.style.left='-80px';
+    truck.removeEventListener('transitionend', voltar);
+  });
+}
+
+function animarBarra(){
+  const bar=document.getElementById('loadingBar');
+  bar.style.width='0%';
+  setTimeout(()=>{bar.style.width='100%';},50);
+}
+
+async function calcularFrete(){
+  const cepDestino=document.getElementById('cepDestino').value;
+  const peso=parseFloat(document.getElementById('peso').value);
+  const tipo=document.getElementById('tipoFrete').value;
+
+  if(!cepDestino || isNaN(peso) || peso<=0){alert("Preencha todos os campos corretamente!"); return;}
+
+  animarCaminhao();
+  document.getElementById('loading').style.display='block';
+  animarBarra();
+  document.getElementById('resultado').style.display='none';
+  document.getElementById('pixCodeContainer').style.display='none';
+  document.getElementById('copyMsg').style.display='none';
+
+  setTimeout(async ()=>{
+    const origem=await buscarEndereco(cepLoja);
+    const destino=await buscarEndereco(cepDestino);
+    document.getElementById('loading').style.display='none';
+
+    if(!origem || !destino){alert("CEP inválido!"); return;}
+
+    let valor=120;
+    if(destino.localidade.toLowerCase()===cidadeLoja.toLowerCase() && destino.uf===estadoLoja){valor=59.9;}
+    else if(destino.uf===estadoLoja){valor=120;}
+    else{valor=200;}
+
+    const texto=`📍 Origem: Rua Duarte, 177 - Planalto, Divinópolis - MG\n📍 Destino: ${destino.logradouro}, ${destino.bairro} - ${destino.localidade}/${destino.uf}\n💰 Tipo de Frete: ${tipo.charAt(0).toUpperCase()+tipo.slice(1)}\n💵 Valor do Frete: R$ ${valor.toFixed(2)}`;
+
+    const resDiv=document.getElementById('resultado');
+    resDiv.innerText=texto;
+    resDiv.style.display='block';
+
+    let btn=document.getElementById('btnPagarFrete');
+    if(!btn){
+      btn=document.createElement('button');
+      btn.id='btnPagarFrete';
+      btn.innerText='💳 Pagar Frete';
+      btn.style.marginTop='12px';
+      btn.style.background='#3bb34b';
+      btn.style.color='#fff';
+      btn.style.border='none';
+      btn.style.borderRadius='8px';
+      btn.style.padding='12px 16px';
+      btn.style.cursor='pointer';
+      btn.onclick=()=>{document.getElementById('pixCodeContainer').style.display='block'; pixPayload=chavePIX;};
+      document.querySelector('.container').appendChild(btn);
+    }else{btn.style.display='block';}
+  },1500);
+}
+
+document.getElementById('btnCalcular').addEventListener('click', calcularFrete);
+</script>
+</body>
+</html>

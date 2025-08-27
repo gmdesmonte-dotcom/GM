@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GM Desmanche e Auto Peças</title>
+<style>
+:root{
+  --green:#3bb34b;       /* verde mais suave */
+  --green-dark:#2a8a36;
+  --bg:#f6f7f8;
+  --text:#222;
+  --white:#fff;
+  --shadow:rgba(0,0,0,0.08);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+a{color:inherit;text-decoration:none}
+
+/* Container padrão */
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{
+  background:var(--green);
+  color:#fff;
+}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 0;
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{height:52px;width:auto;display:block}
+.menu{display:flex;gap:14px;flex-wrap:wrap}
+.menu a{color:#fff;font-weight:700}
+.menu a:hover{opacity:.9}
+
+/* HERO */
+.hero{
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.4)),
+    url('pneus.png') center/cover no-repeat,
+    linear-gradient(180deg, var(--green), var(--green-dark));
+  color:#fff;
+}
+.hero .wrap{
+  min-height:380px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:56px 16px;gap:14px;
+}
+.hero h1{font-size:clamp(22px,4vw,38px);font-weight:800}
+.hero p{font-size:clamp(14px,2.5vw,18px);opacity:.95}
+.cta{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px
+}
+.btn{
+  display:inline-block;padding:12px 18px;border-radius:10px;font-weight:800;transition:.3s
+}
+.btn-light{background:#fff;color:var(--green)}
+.btn-light:hover{background:#f1fff1}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-dark)}
+
+/* Seções */
+section{padding:44px 0}
+h2{color:var(--green);text-align:center;margin:0 0 18px 0;font-size:clamp(20px,3vw,28px)}
+.card{
+  background:var(--white);border-radius:12px;padding:18px;
+  box-shadow:0 10px 20px var(--shadow);
+  text-align:center;
+}
+.card img{height:60px;width:auto;margin-bottom:10px}
+
+/* Media center */
+.media-center{display:flex;justify-content:center;flex-wrap:wrap;gap:16px}
+/* ajuste do espaçamento do pátio/estoque */
+.media-gap {
+  margin-top:40px; /* espaço entre hero e imagem */
+  margin-bottom:32px;
+}
+.media-center img{
+  display:block;max-width:100%;height:auto;border-radius:12px;
+  max-height:260px;
+}
+
+/* Parceiros verticais */
+.partners{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+.partners img{
+  height:50px;
+  width:auto;
+  max-width:100px;
+  transition: transform 0.3s;
+}
+.partners img:hover{transform: scale(1.08);}
+
+/* Formulário de contato */
+.form-wrap{
+  max-width:560px;margin:0 auto;background:var(--white);padding:18px;border-radius:12px;
+  box-shadow:0 10px 20px var(--shadow)
+}
+.form-row{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+input, textarea{
+  width:100%;padding:12px;border:1px solid #d9d9d9;border-radius:8px;font-size:16px;
+  transition:.3s;
+}
+input:focus, textarea:focus{border-color:var(--green);outline:none;box-shadow:0 0 8px var(--green);}
+textarea{min-height:110px;resize:vertical}
+button[type="submit"]{
+  width:100%;padding:14px;border:0;border-radius:10px;background:var(--green);color:#fff;
+  font-size:18px;font-weight:800;cursor:pointer;transition:.3s
+}
+button[type="submit"]:hover{background:var(--green-dark)}
+
+/* Certificado */
+.certificado{
+  text-align:center;
+  padding:24px 16px;
+  background:var(--white);
+  border-radius:12px;
+  margin:32px 0;
+  box-shadow:0 10px 20px var(--shadow);
+}
+.certificado img{max-width:120px;margin-bottom:12px}
+
+/* WhatsApp flutuante */
+.whatsapp-btn{
+  position:fixed;right:16px;bottom:16px;z-index:9999;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:64px;height:64px;border-radius:50%;background:#25d366;color:#fff;
+  box-shadow:0 10px 18px rgba(0,0,0,.18);font-size:30px;transition:.2s
+}
+.whatsapp-btn:hover{transform:scale(1.08)}
+.whatsapp-btn:active{transform:scale(.98)}
+
+/* CARROSSEL */
+.carousel{
+  position:relative;
+  overflow:hidden;
+  margin-top:24px;
+}
+.carousel-track{
+  display:flex;
+  transition:transform 0.5s ease-in-out;
+  gap:18px;
+}
+.carousel .card{
+  min-width:220px;
+  flex:0 0 auto;
+}
+.carousel-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:var(--green);
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  font-size:24px;
+  border-radius:50%;
+  cursor:pointer;
+  opacity:0.8;
+  transition:opacity .3s, transform .2s;
+  z-index:10;
+}
+.carousel-btn:hover{
+  opacity:1;
+  transform:translateY(-50%) scale(1.1);
+}
+.carousel-btn.prev{left:10px;}
+.carousel-btn.next{right:10px;}
+@media (max-width:600px){
+  .carousel .card{min-width:180px;}
+}
+
+/* Responsividade extra */
+@media (min-width:900px){
+  .hero .wrap{min-height:460px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <div class="logo">
+      <img src="logo.png" alt="GM Auto Peças" />
+      <strong>GM Desmanche e Auto Peças</strong>
+    </div>
+    <nav class="menu">
+      <a href="#servicos">Serviços</a>
+      <a href="#parceiros">Parceiros</a>
+      <a href="#contato">Contato</a>
+      <a href="frete.html">Calculadora de Frete</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container wrap">
+    <h1>Peças Automotivas com Procedência e Garantia</h1>
+    <p>Qualidade, bom preço e atendimento rápido na sua cotação.</p>
+    <div class="cta">
+      <a class="btn btn-light" href="#servicos">Ver serviços</a>
+      <a class="btn btn-green" href="https://wa.me/553798416044">Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGEM ILUSTRATIVA COM ESPAÇAMENTO AJUSTADO -->
+<section class="container media-gap">
+  <div class="media-center">
+    <img src="portas.png" alt="Pátio e estoque de peças" />
+  </div>
+  <p style="text-align:center;margin-top:8px;color:#555;font-size:14px;">Nosso estoque com peças revisadas e prontas para envio.</p>
+</section>
+  <!-- SOBRE NÓS -->
+<section id="sobre">
+  <div class="container">
+    <h2>Sobre Nós</h2>
+    <div class="card" style="margin-bottom:24px; text-align:left; line-height:1.6;">
+      <p>Na GM Desmanche, atuamos há mais de 10 anos oferecendo peças automotivas de qualidade, revisadas e com procedência garantida.Trabalhamos com todas as marcas de Veículos,Nosso compromisso é entregar soluções rápidas e confiáveis para oficinas e clientes em geral, sempre com atendimento personalizado.</p>
+    </div>
+    
+<section style="text-align: center; padding: 10px;">
+  <img src="campos.png" 
+       alt="Imagem do pátio do desmanche" 
+       style="width: 100%; max-width: 400px; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+</section>
+    
+  <!-- SERVIÇOS - CARROSSEL -->
+<section id="servicos">
+  <div class="container">
+    <h2>Nossos Serviços</h2>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="card">
+          <img src="motores.png" alt="Motor">
+          <h3>Motores</h3>
+          <p>Peças revisadas com garantia.</p>
+        </div>
+        <div class="card">
+          <img src="arranque.png" alt="Motor de arranque">
+          <h3>Motor de arranque</h3>
+          <p>Conjuntos prontos para instalar.</p>
+        </div>
+        <div class="card">
+          <img src="sucatalataria.png" alt="Lataria">
+          <h3>Lataria</h3>
+          <p>Portas, capôs e para-choques originais.</p>
+        </div>
+        <div class="card">
+          <img src="suspensao.png" alt="Suspensão">
+          <h3>Suspensão</h3>
+          <p>Amortecedores, bandejas e conjuntos.</p>
+        </div>
+      </div>
+      <button class="carousel-btn prev">&#10094;</button>
+      <button class="carousel-btn next">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<!-- PARCEIROS -->
+<section id="parceiros">
+  <div class="container">
+    <h2>Nossos Parceiros</h2>
+    <div class="partners">
+      <img src="freitas.png" alt="Freitas" />
+      <img src="sodre.png" alt="Sodré" />
+      <img src="sato.png" alt="Sato" />
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO / FORMULÁRIO -->
+<section id="contato">
+  <div class="container">
+    <h2>Fale Conosco</h2>
+    <div class="form-wrap">
+      <form action="https://formsubmit.co/gmdesmonte@gmail.com" method="POST">
+        <div class="form-row"><input type="text" name="nome" placeholder="Seu nome" required></div>
+        <div class="form-row"><input type="email" name="email" placeholder="Seu e-mail" required></div>
+        <div class="form-row"><input type="tel" name="telefone" placeholder="Seu telefone" pattern="[0-9]{10,11}" required></div>
+        <div class="form-row"><input type="text" name="cidade" placeholder="Cidade (opcional)"></div>
+        <div class="form-row"><textarea name="mensagem" placeholder="Descreva a peça que precisa" required></textarea></div>
+        <input type="hidden" name="_next" value="obrigado.html">
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </div>
+</section>
+    
+      <!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="container">
+    <h2>O que nossos clientes dizem</h2>
+    <div class="depoimentos-list" style="display:flex; flex-direction:column; gap:18px; margin-top:20px;">
+      <div class="card" style="text-align:left;">
+        <p>"Excelente atendimento! Recebi minhas peças rapidamente e tudo em perfeito estado."</p>
+        <strong>- João P.</strong>
+      </div>
+      <div class="card" style="text-align:left;">
+        <p>"Peças revisadas e com garantia, recomendo a GM Auto Peças para qualquer oficina."</p>
+        <strong>- Maria S.</strong>
+      </div>
+      <div class="card" style="text-align:left;">
+        <p>"Atendimento rápido, preço justo e peças de qualidade. Sempre compro aqui."</p>
+        <strong>- Carlos M.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICADO -->
+<section class="certificado">
+  <img src="legal.png" alt="Certificado de Desmanche Autorizado">
+  <h3>Desmanche Autorizado e Legalizado</h3>
+  <p>Nosso desmanche é certificado pelos órgãos competentes, garantindo que todas as peças comercializadas são 100% legais e seguras.</p>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--green); color:#fff; padding:32px 16px;">
+  <div class="container" style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+    <p style="margin:0; font-size:14px;">&copy; 2018 GM Auto Peças — Todos os direitos reservados.</p>
+    <nav style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; font-size:14px;">
+      <a href="politica.html" target="_blank" style="color:#fff; text-decoration:underline; transition:opacity .3s;">Política de Privacidade</a>
+      <a href="frete.html" style="color:#fff; text-decoration:underline; transition:opacity .3s;">Calculadora de Frete</a>
+    </nav>
+    <p>Endereço: Rua Duarte Planalto 177- Bairro Centro, Divinópolis - MG</p>
+    <p style="margin:0; font-size:12px; opacity:0.8;">Atendimento rápido e seguro em todas as suas compras de peças.</p>
+  </div>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a href="https://wa.me/553798416044" 
+   class="whatsapp-btn" aria-label="Falar no WhatsApp">
+   <img src="zap.png" alt="WhatsApp" style="width:28px; height:28px;">
+</a>
+
+<!-- CARROSSEL JS -->
+<script>
+const track = document.querySelector('.carousel-track');
+const cards = Array.from(track.children);
+const prevBtn = document.querySelector('.carousel-btn.prev');
+const nextBtn = document.querySelector('.carousel-btn.next');
+let index = 0;
+
+function updateCarousel(){
+  const cardWidth = cards[0].getBoundingClientRect().width + 18; // + gap
+  track.style.transform = `translateX(-${index * cardWidth}px)`;
+}
+
+nextBtn.addEventListener('click', ()=>{
+  index = (index + 1) % cards.length;
+  updateCarousel();
+});
+prevBtn.addEventListener('click', ()=>{
+  index = (index - 1 + cards.length) % cards.length;
+  updateCarousel();
+});
+
+setInterval(()=>{
+  index = (index + 1) % cards.length;
+  updateCarousel();
+},4000);
+
+window.addEventListener('resize', updateCarousel);
+</script>
+</body>
+</html>
