@@ -286,20 +286,40 @@ button[type="submit"]:hover{background:var(--green-dark)}
     <h2>Fale Conosco</h2>
     <div class="form-wrap">
     <form action="https://formsubmit.co/gmdesmonte@gmail.com" method="POST">
-  <div class="form-row"><input type="text" name="nome" placeholder="Seu nome" required></div>
-  <div class="form-row"><input type="email" name="email" placeholder="Seu e-mail" required></div>
-  <div class="form-row"><input type="tel" name="telefone" placeholder="Seu telefone" pattern="[0-9]{10,11}" required></div>
-  <div class="form-row"><input type="text" name="cidade" placeholder="Cidade (opcional)"></div>
-  <div class="form-row"><textarea name="mensagem" placeholder="Descreva a peça que precisa" required></textarea></div>
+  <!-- Nome -->
+  <div class="form-row">
+    <input type="text" name="nome" placeholder="Seu nome" required>
+  </div>
+
+  <!-- Email -->
+  <div class="form-row">
+    <input type="email" name="email" placeholder="Seu e-mail" required>
+  </div>
+
+  <!-- Telefone -->
+  <div class="form-row">
+    <input type="tel" name="telefone" placeholder="Seu telefone" pattern="[0-9]{10,11}" required>
+  </div>
+
+  <!-- Cidade -->
+  <div class="form-row">
+    <input type="text" name="cidade" placeholder="Cidade (opcional)">
+  </div>
+
+  <!-- Mensagem -->
+  <div class="form-row">
+    <textarea name="mensagem" placeholder="Descreva a peça que precisa" required></textarea>
+  </div>
 
   <!-- Redireciona direto para obrigado.html -->
-  <input type="hidden" name="_next" value="obrigado.html">
+  <input type="hidden" name="_next" value="https://gmdesmanche.online/obrigado.html">
 
-  <!-- Desativa o "quase lá" com captcha -->
+  <!-- Desativa o captcha do FormSubmit -->
   <input type="hidden" name="_captcha" value="false">
 
+  <!-- Botão de envio -->
   <button type="submit">Enviar</button>
-</form>
+    </form>
     </div>
   </div>
 </section>
