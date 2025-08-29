@@ -139,7 +139,7 @@ async function calcularFrete(){
     else if(destino.uf===estadoLoja){valor=120;}
     else{valor=200;}
 
-    const texto=`📍 Origem: Rua Duarte, 177 - Planalto, Divinópolis - MG\n📍 Destino: ${destino.logradouro}, ${destino.bairro} - ${destino.localidade}/${destino.uf}\n💰 Tipo de Frete: ${tipo.charAt(0).toUpperCase()+tipo.slice(1)}\n💵 Valor do Frete: R$ ${valor.toFixed(2)}`;
+    const texto=`📍 Origem: Rua Duarte, 177 - Catalão, Divinópolis - MG\n📍 Destino: ${destino.logradouro}, ${destino.bairro} - ${destino.localidade}/${destino.uf}\n💰 Tipo de Frete: ${tipo.charAt(0).toUpperCase()+tipo.slice(1)}\n💵 Valor do Frete: R$ ${valor.toFixed(2)}`;
 
     const resDiv=document.getElementById('resultado');
     resDiv.innerText=texto;
