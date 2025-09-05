@@ -276,6 +276,24 @@ button[type="submit"]:hover{background:var(--green-dark)}
     </div>
   </div>
 </section>
+    <!-- VANS -->
+<section id="vans">
+  <div class="container">
+    <h2>Temos Peças para Vans</h2>
+    <p style="text-align:center; max-width:700px; margin:0 auto 28px; font-size:16px; color:#444;">
+      Trabalhamos com todas as marcas e modelos de vans. Motores, câmbios, lataria, suspensão e acessórios — 
+      tudo revisado, com procedência e garantia para sua segurança.
+    </p>
+
+    <div class="van-gallery">
+      <img src="fotos0.png" alt="Peças de motor para vans">
+      <img src="fotos1.png" alt="Lataria de vans">
+      <img src="fotos2.png" alt="Suspensão de vans">
+      <img src="fotos3.png" alt="Interior e acessórios de vans">
+      <img src="fotos4.png" alt="Peças revisadas para vans">
+    </div>
+  </div>
+</section>
 
 <!-- PARCEIROS -->
 <section id="parceiros">
@@ -288,6 +306,29 @@ button[type="submit"]:hover{background:var(--green-dark)}
     </div>
   </div>
 </section>
+
+<style>
+.partners{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+}
+.partners img{
+  width:120px;        /* largura fixa */
+  height:60px;        /* altura fixa */
+  object-fit:contain; /* mantém proporção sem distorcer */
+  background:#fff;
+  padding:6px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+.partners img:hover{
+  transform:scale(1.08);
+}
+</style>
 
 <!-- CONTATO / FORMULÁRIO -->
 <section id="contato">
