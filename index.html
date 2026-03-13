@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
- <!-- Google tag (gtag.js) -->
+ <!-- Google Tag (Global) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17984119313"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17984119313');
-</script>
-
-  gtag('config', 'AW-17480742566');
 </script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -464,9 +460,14 @@ button[type="submit"]:hover{background:var(--green-dark)}
   }
 </style>
 
-<!-- WhatsApp flutuante -->
-<a href="https://wa.me/553798416044" 
-   class="whatsapp-btn" aria-label="Falar no WhatsApp">
+<a href="https://wa.me/553798416044"
+   class="whatsapp-btn"
+   aria-label="Falar no WhatsApp"
+   onclick="gtag('event', 'conversion', {
+       'send_to': 'AW-17984119313/-JzbCMaY-IccEJHEv_9C',
+       'value': 1.0,
+       'currency': 'BRL'
+   });">
    <img src="zap.png" alt="WhatsApp" style="width:28px; height:28px;">
 </a>
 
